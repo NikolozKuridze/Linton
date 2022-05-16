@@ -1,0 +1,16 @@
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\bin\Debug\net5.0\Linton.Domain.dll.config
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\bin\Debug\net5.0\Linton.Domain.deps.json
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\bin\Debug\net5.0\Linton.Domain.runtimeconfig.json
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\bin\Debug\net5.0\Linton.Domain.runtimeconfig.dev.json
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\bin\Debug\net5.0\Linton.Domain.dll
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\bin\Debug\net5.0\ref\Linton.Domain.dll
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\bin\Debug\net5.0\Linton.Domain.pdb
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\obj\Debug\net5.0\Linton.Domain.csproj.AssemblyReference.cache
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\obj\Debug\net5.0\Linton.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\obj\Debug\net5.0\Linton.Domain.AssemblyInfoInputs.cache
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\obj\Debug\net5.0\Linton.Domain.AssemblyInfo.cs
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\obj\Debug\net5.0\Linton.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\obj\Debug\net5.0\Linton.Domain.dll
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\obj\Debug\net5.0\ref\Linton.Domain.dll
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\obj\Debug\net5.0\Linton.Domain.pdb
+C:\Users\Nikolozi\source\repos\Linton\Linton.Domain\obj\Debug\net5.0\Linton.Domain.genruntimeconfig.cache
