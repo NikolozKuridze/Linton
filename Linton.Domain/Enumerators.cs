@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Linton.Domain
 {
-    enum RecirdStatusType : byte
+    enum Banks : byte
     {
-        [DescriptionAttribute("აქტიური")]
-        Active = 0,
-        [DescriptionAttribute("წაშლილი")]
-        Deleted = 1
-    }
+        [DescriptionAttribute("TBC BANK")]
+        TB = 0,
+        [DescriptionAttribute("BANK OF GEORGIA")]
+        BG = 1
+    } 
 }

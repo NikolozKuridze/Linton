@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Linton.Domain\Linton.Domain.csproj" />
+    <ProjectReference Include="..\Linton.Repository\Linton.Repository.csproj" />
   </ItemGroup>
 
 </Project>

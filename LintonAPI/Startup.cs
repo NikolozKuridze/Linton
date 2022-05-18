@@ -1,7 +1,4 @@
-using Linton.Domain;
-using Linton.Domain.Interfaces;
-using Linton.Domain.Repositories; 
-using LintonAPI.Models;
+using Linton.Repository; 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,8 +21,7 @@ namespace LintonAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>(); 
-            services.AddDbContext<LintonDbContext>();
-            services.Configure<MySettingsModel>(Configuration.GetSection("AppSettings"));
+            services.AddDbContext<LintonDbContext>(); 
             services.AddDbContext<LintonDbContext>(); 
 
             services.AddControllers();

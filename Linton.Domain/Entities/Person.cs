@@ -11,7 +11,8 @@ namespace Linton.Domain.Models
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName => FirstName + " " + LastName;
         public int Age { get; set; }
-        public string IBAN { get; set; }
+        public Bank Bank { get; set; }
     }
 }

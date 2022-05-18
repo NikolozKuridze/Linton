@@ -887,6 +887,22 @@
             "rid": "win"
           }
         }
+      },
+      "Linton.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "4.1.0",
+          "Microsoft.EntityFrameworkCore": "5.0.17",
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.17",
+          "System.Data.SqlClient": "4.8.3"
+        },
+        "compile": {
+          "bin/placeholder/Linton.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Linton.Domain.dll": {}
+        }
       }
     }
   },
@@ -3172,14 +3188,18 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "Linton.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Linton.Domain/Linton.Domain.csproj",
+      "msbuildProject": "../Linton.Domain/Linton.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Microsoft.Data.SqlClient >= 4.1.0",
+      "Linton.Domain >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 5.0.17",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.17",
-      "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.17",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.17",
       "System.Data.SqlClient >= 4.8.3"
     ]
@@ -3191,11 +3211,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Nikolozi\\source\\repos\\Linton\\Linton.Domain\\Linton.Domain.csproj",
-      "projectName": "Linton.Domain",
-      "projectPath": "C:\\Users\\Nikolozi\\source\\repos\\Linton\\Linton.Domain\\Linton.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\Nikolozi\\source\\repos\\Linton\\Linton.Repository\\Linton.Repository.csproj",
+      "projectName": "Linton.Repository",
+      "projectPath": "C:\\Users\\Nikolozi\\source\\repos\\Linton\\Linton.Repository\\Linton.Repository.csproj",
       "packagesPath": "C:\\Users\\Nikolozi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Nikolozi\\source\\repos\\Linton\\Linton.Domain\\obj\\",
+      "outputPath": "C:\\Users\\Nikolozi\\source\\repos\\Linton\\Linton.Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3215,7 +3235,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Nikolozi\\source\\repos\\Linton\\Linton.Domain\\Linton.Domain.csproj": {
+              "projectPath": "C:\\Users\\Nikolozi\\source\\repos\\Linton\\Linton.Domain\\Linton.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -3228,10 +3252,6 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
-          "Microsoft.Data.SqlClient": {
-            "target": "Package",
-            "version": "[4.1.0, )"
-          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[5.0.17, )"
@@ -3239,10 +3259,6 @@
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
-            "target": "Package",
-            "version": "[5.0.17, )"
-          },
-          "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "[5.0.17, )"
           },
