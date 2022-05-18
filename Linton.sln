@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LintonAPI", "LintonAPI\LintonAPI.csproj", "{70D10B72-F514-445C-B0B0-26CE439F984A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LintonAPI", "LintonAPI\LintonAPI.csproj", "{70D10B72-F514-445C-B0B0-26CE439F984A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linton.Domain", "Linton.Domain\Linton.Domain.csproj", "{9339F736-5F78-4AC1-8F79-CA4625192E1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linton.Domain", "Linton.Domain\Linton.Domain.csproj", "{9339F736-5F78-4AC1-8F79-CA4625192E1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linton.Repository", "Linton.Repository\Linton.Repository.csproj", "{59F40BC6-60D9-464C-ABDB-C7FA912CA19D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9339F736-5F78-4AC1-8F79-CA4625192E1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9339F736-5F78-4AC1-8F79-CA4625192E1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9339F736-5F78-4AC1-8F79-CA4625192E1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F40BC6-60D9-464C-ABDB-C7FA912CA19D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F40BC6-60D9-464C-ABDB-C7FA912CA19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F40BC6-60D9-464C-ABDB-C7FA912CA19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F40BC6-60D9-464C-ABDB-C7FA912CA19D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

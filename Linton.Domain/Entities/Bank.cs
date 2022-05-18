@@ -10,6 +10,6 @@ namespace Linton.Domain.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string SwiftCode { get; set; }
+        public string SwiftCode { get; set; } 
     }
 }

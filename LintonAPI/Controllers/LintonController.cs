@@ -1,10 +1,5 @@
-﻿using Linton.Domain;
-using Linton.Domain.Interfaces; 
-using Linton.Domain.Repositories; 
-using LintonAPI.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options; 
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,66 +8,80 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Linton.Domain.Models;
+using System.Text.RegularExpressions;
+using Linton.Repository;
+using LintonAPI.Models; 
 
 namespace LintonAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class LintonController
-    {
-        private readonly IOptions<MySettingsModel> _appSettings; 
+    { 
         private IUnitOfWork _unitOfWork;
-        public LintonController(IOptions<MySettingsModel> app , IUnitOfWork UnitOfWork)
-        {
-            _appSettings = app;
+        public Helper.Helper helper = new Helper.Helper();
+        public LintonController(IUnitOfWork UnitOfWork)
+        { 
             _unitOfWork = UnitOfWork; 
-        }
+        }  
+        // კონკრეტული პირის ძებნა სახელის და გვარის ინიციალებით ან პირიქით 
         [HttpGet]
         [Route("find")]
-        public List<MyPerson> Get(string search)
+        public  PersonModel  Get(string search)
         { 
-            var persons = _unitOfWork.Persons.All().Result.ToList();
-            persons = persons.Where(f => (f.FirstName.ToLower()+" "+ f.LastName).ToLower().Contains(search.ToLower())).ToList();
-
-           // persons = persons.Where(f => f.FirstName.ToLower().Contains(search.ToLower()) ||f.LastName.ToLower().Contains(search.ToLower())).ToList();
-            var banks = _unitOfWork.Banks.All().Result.ToList();
-            List<MyPerson> mp = new List<MyPerson>();
+            var persons = from p in _unitOfWork.Persons.All() join b in _unitOfWork.Banks.All() on p.Bank.ID equals b.ID  
+                          select p;
+            PersonModel fp  = new PersonModel();  
             foreach (var item in persons)
             {
-                var b = ibanChecker(item.IBAN);
-                var bName = banks.Where(x => x.SwiftCode == b.Result).Select(a => a.Name).FirstOrDefault();
-                mp.Add(new MyPerson { Person = item, Bank = bName });
+                var ff = item.FullName.ToLower().Split(' ');
+                var s = search.Split(' ');
+                for (int i = 0; i < ff.Length; i++)
+                {
+                    for (int e = 0; e < s.Length; e++)
+                    {
+                        if ( ff[i].ToLower().Contains(s[e].ToLower())  == true)
+                        {
+                            fp.FullName = item.FullName ;
+                            fp.Age = item.Age  ;
+                            fp.IBAN = item.Bank.SwiftCode;
+                            fp.BankName = item.Bank.Name;
+                        }
+                    } 
+                }
+            }   
+            var banks = from b in _unitOfWork.Banks.All()
+                        select b;
+            if (fp!=null)
+            {     
+                return fp;
             }
-            return mp;
+            return null;
         }
+        // პირების სია
         [HttpGet]
         [Route("list")]
-        public List<MyPerson> Get()
+        public IEnumerable<List<PersonModel>> Get()
         {
-            var persons = _unitOfWork.Persons.All().Result.ToList(); 
-            var banks = _unitOfWork.Banks.All().Result.ToList();
-            List<MyPerson> mp = new List<MyPerson>();
-            foreach (var item in persons)
-            {
-               var b = ibanChecker(item.IBAN);
-                var bName = banks.Where(x => x.SwiftCode == b.Result).Select(a=>a.Name).FirstOrDefault();
-                mp.Add(new MyPerson {Person = item,Bank = bName });
-            }
-            return mp;
+
+            var persons = from p in _unitOfWork.Persons.All() join b in _unitOfWork.Banks.All() on p.Bank.ID equals b.ID select new List<PersonModel> { new PersonModel { FullName = p.FirstName +" "+p.LastName, Age= p.Age,IBAN  = p.Bank.SwiftCode, BankName= p.Bank.Name } } ;
+            return persons;
         } 
 
+        //პირის აიბანის განახლება
         [HttpPut]
         [Route("update")]
         public async Task<bool> UpdateIban(int id,string newIBAN)
         { 
-            var s = ibanChecker(newIBAN);
-            var person =_unitOfWork.Persons.Get(id).Result;
+            var s = helper.checker(newIBAN);
+
+            var person =from p in _unitOfWork.Persons.All() join b in _unitOfWork.Banks.All() on p.Bank.ID equals b.ID where p.ID == id select p;
             if (person != null)
             {
-                if (!string.IsNullOrEmpty(s.Result))
+                if (s == true)
                 {
-                    person.IBAN = newIBAN;
-                    await _unitOfWork.Persons.Update(person);
+                    person.Last().Bank.SwiftCode = newIBAN;
+                    await _unitOfWork.Persons.Update(person.LastOrDefault());
                     await _unitOfWork.CompleteAsync();
                     return true;
                 }
@@ -80,59 +89,40 @@ namespace LintonAPI.Controllers
             }
             return false;
         }
+        //პირის დამატება
         [HttpPost]
         [Route("add")]
         public async Task<bool> AddPerson(Person person)
         {
+            if (person.Bank.SwiftCode !=null)
+            { 
+            person.Bank.Name = helper.GetBankName(person.Bank.SwiftCode);
+            }
             if (person != null) 
             {
-                var s = ibanChecker(person.IBAN);
-                if (!string.IsNullOrEmpty(s.Result))
+                var s = helper.checker(person.Bank.SwiftCode);
+                if (s==true)
                 { 
-                await _unitOfWork.Persons.Save(person);
+                    await _unitOfWork.Persons.Save(person);
                     await _unitOfWork.CompleteAsync();
+                    return true;
                 }
-             return true;
             }
             return false;
            
         }
+        // პირის წაშლა
         [HttpDelete]
         [Route("remove")]
         public async Task<bool> RemovePerson(int ID)
         {
             if (_unitOfWork.Persons.Get(ID).Result != null)
             { 
-                    await _unitOfWork.Persons.Delete(ID);
+                    await _unitOfWork.Persons.Delete(ID); 
                     await _unitOfWork.CompleteAsync(); 
                 return true; 
             }
             return false; 
-        }
-        [HttpGet]
-        [Route("ibancheck")]
-        public async Task<string> ibanChecker(string IBAN)
-        { 
-            string apiKey = _appSettings.Value.apiKey;
-            string apiUrl = $"https://api.ibanapi.com/v1/validate/{IBAN}?api_key={apiKey}";
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(apiUrl);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-                if (response.IsSuccessStatusCode)
-                {
-                    var data = await response.Content.ReadAsStringAsync();
-                    var parsedata = JObject.Parse(data);
-                    var bank =  parsedata["data"]["bank"];
-                    var swiftCode = bank["bic"].ToString();
-                    if (!string.IsNullOrEmpty(swiftCode)) 
-                        return swiftCode; 
-                } 
-                return null;
-            } 
-        }
+        }  
     }
 }
